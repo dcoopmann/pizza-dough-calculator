@@ -1,0 +1,2 @@
+# Pizza Dough Calculator
+This is a toy project with the goal of learning the Rust programming language. A simple calculator for Napoletan style pizza dough. When i have time I try to improve/over engineer this further. For now it is but a simple cli tool helping to make great pizza dough following the proportions as recommended by the [Associazione Verace Pizza Napoletana](https://www.pizzanapoletana.org/en/)
