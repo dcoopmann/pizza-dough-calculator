@@ -11,11 +11,15 @@ struct Args {
     ///Size of pizza[s] you want to make (S, M, L , XL)
     #[arg(short, long, default_value_t=String::from("M"))]
     size: String,
+
+    ///Type of yeast you want to use ([F]resh, [D]ry, [L]ievito Madre)
+    #[arg(short, long, default_value_t=String::from("F"))]
+    yeast: String,
 }
 
 fn main() {
     let args = Args::parse();
 
-    let pd = PizzaDough::new(args.portions, args.size);
+    let pd = PizzaDough::new(args.portions, args.size, args.yeast);
     pd.printout();
 }

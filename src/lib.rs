@@ -18,10 +18,11 @@ pub struct PizzaDough {
     water: f32,
     salt: f32,
     yeast: f32,
+    yeast_type: String,
 }
 
 impl PizzaDough {
-    pub fn new(p: f32, s: String) -> Self {
+    pub fn new(p: f32, s: String, y: String) -> Self {
         let base = 125.0;
         let s_f = match s.trim().to_uppercase().as_str() {
             "S" => 0.75,
@@ -30,13 +31,20 @@ impl PizzaDough {
             "XL" => 1.5,
             _ => 1.0,
         };
+        let yeast = match y.trim().to_uppercase().as_str() {
+            "F" => (0.001, "Fresh Yeast"),
+            "D" => (0.0003, "Dry Yeast"),
+            "L" => (0.15, "Lievito Madre"),
+            _ => (0.001, "Fresh Yeast"),
+        };
         PizzaDough {
             portions: p,
             size: s.to_uppercase(),
             flour: base * p * s_f,
             water: (base * 0.6) * p * s_f,
             salt: (base * 0.03) * p * s_f,
-            yeast: (base * 0.001) * p * s_f,
+            yeast: (base * yeast.0) * p * s_f,
+            yeast_type: yeast.1.to_string(),
         }
     }
 
@@ -49,7 +57,7 @@ impl PizzaDough {
         println!("Flour:   {}g", self.flour);
         println!("Water: {}g", self.water);
         println!("Salt:   {}g", self.salt);
-        println!("Yeast:   {}g", self.yeast);
+        println!("{}:   {}g", self.yeast_type, self.yeast);
 
         let ta = self.flour + self.water + self.salt + self.yeast;
 
@@ -64,7 +72,7 @@ mod tests {
 
     #[test]
     fn test_one_medium() {
-        let dough = PizzaDough::new(1.0, String::from("m"));
+        let dough = PizzaDough::new(1.0, String::from("m"), String::from("f"));
         assert_eq!(dough.flour, 125.0);
         assert_eq!(dough.water, 75.0);
         assert_eq!(dough.salt, 3.75);
