@@ -1,3 +1,4 @@
+use actix_web::{get, App, HttpResponse, HttpServer, Responder};
 use clap::Parser;
 use pizza_dough_calculator::PizzaDough;
 
@@ -15,11 +16,35 @@ struct Args {
     ///Type of yeast you want to use ([F]resh, [D]ry, [L]ievito Madre)
     #[arg(short, long, default_value_t=String::from("F"))]
     yeast: String,
+
+    ///Start serving pizza dough calculation via http api
+    #[arg(long, default_value_t=String::from("no"))]
+    server: String,
 }
 
-fn main() {
+#[get("/health-check")]
+async fn health_check() -> impl Responder {
+    HttpResponse::Ok().body("Server in good health!")
+}
+
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
     let args = Args::parse();
 
-    let pd = PizzaDough::new(args.portions, args.size, args.yeast);
-    pd.printout();
+    match args.server.to_lowercase().as_str() {
+        "no" => {
+            let pd = PizzaDough::new(args.portions, args.size, args.yeast);
+            pd.printout();
+            Ok(())
+        }
+        "yes" => {
+            println!("Starting to serve Pizza via Http");
+
+            HttpServer::new(|| App::new().service(health_check))
+                .bind(("127.0.0.1", 8080))?
+                .run()
+                .await
+        }
+        _ => Ok(()),
+    }
 }
