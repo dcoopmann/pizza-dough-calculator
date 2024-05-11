@@ -1,6 +1,7 @@
-use actix_web::{get, App, HttpResponse, HttpServer, Responder};
+use actix_web::{App, HttpServer};
 use clap::Parser;
-use pizza_dough_calculator::PizzaDough;
+use pizza_dough_calculator::pizza_dough::PizzaDough;
+use pizza_dough_calculator::routes::health_check;
 
 #[derive(Parser, Debug)]
 #[command(author, version,  about, long_about=None)]
@@ -20,11 +21,6 @@ struct Args {
     ///Start serving pizza dough calculation via http api
     #[arg(long)]
     serve: bool,
-}
-
-#[get("/health-check")]
-async fn health_check() -> impl Responder {
-    HttpResponse::Ok().body("<html><h1>Server in good health!</h1></html>")
 }
 
 #[actix_web::main]
