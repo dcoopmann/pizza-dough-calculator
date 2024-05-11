@@ -18,26 +18,26 @@ struct Args {
     yeast: String,
 
     ///Start serving pizza dough calculation via http api
-    #[arg(long, default_value_t=String::from("no"))]
-    server: String,
+    #[arg(long)]
+    serve: bool,
 }
 
 #[get("/health-check")]
 async fn health_check() -> impl Responder {
-    HttpResponse::Ok().body("Server in good health!")
+    HttpResponse::Ok().body("<html><h1>Server in good health!</h1></html>")
 }
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     let args = Args::parse();
 
-    match args.server.to_lowercase().as_str() {
-        "no" => {
+    match args.serve {
+        false => {
             let pd = PizzaDough::new(args.portions, args.size, args.yeast);
             pd.printout();
             Ok(())
         }
-        "yes" => {
+        true => {
             println!("Starting to serve Pizza via Http");
 
             HttpServer::new(|| App::new().service(health_check))
@@ -45,6 +45,5 @@ async fn main() -> std::io::Result<()> {
                 .run()
                 .await
         }
-        _ => Ok(()),
     }
 }
