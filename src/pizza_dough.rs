@@ -10,7 +10,9 @@ Mother Yeast 5-20% of flour used
 Dry yeast 1/3 of fresh yeast used (1 gram of dry for 3 grams of fresh)
 - Flour: 1,600/1,800 (depending on the degree of absorption).
 */
+use serde::{Deserialize, Serialize};
 
+#[derive(Serialize, Deserialize)]
 pub struct PizzaDough {
     portions: f32,
     size: String,
