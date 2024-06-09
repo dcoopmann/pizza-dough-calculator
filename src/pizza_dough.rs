@@ -26,7 +26,7 @@ pub struct PizzaDough {
 impl PizzaDough {
     pub fn new(p: f32, s: String, y: String) -> Self {
         let base = 125.0;
-        let s_f = match s.trim().to_uppercase().as_str() {
+        let size_factor = match s.trim().to_uppercase().as_str() {
             "S" => 0.75,
             "M" => 1.0,
             "L" => 1.25,
@@ -42,10 +42,10 @@ impl PizzaDough {
         PizzaDough {
             portions: p,
             size: s.to_uppercase(),
-            flour: base * p * s_f,
-            water: (base * 0.6) * p * s_f,
-            salt: (base * 0.03) * p * s_f,
-            yeast: (base * yeast.0) * p * s_f,
+            flour: base * p * size_factor,
+            water: (base * 0.6) * p * size_factor,
+            salt: (base * 0.03) * p * size_factor,
+            yeast: (base * yeast.0) * p * size_factor,
             yeast_type: yeast.1.to_string(),
         }
     }
