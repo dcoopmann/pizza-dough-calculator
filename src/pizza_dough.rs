@@ -24,28 +24,28 @@ pub struct PizzaDough {
 }
 
 impl PizzaDough {
-    pub fn new(p: f32, s: String, y: String) -> Self {
+    pub fn new(portions: f32, size: String, yeast_type: String) -> Self {
         let base = 125.0;
-        let size_factor = match s.trim().to_uppercase().as_str() {
+        let size_factor = match size.trim().to_uppercase().as_str() {
             "S" => 0.75,
             "M" => 1.0,
             "L" => 1.25,
             "XL" => 1.5,
             _ => 1.0,
         };
-        let yeast = match y.trim().to_uppercase().as_str() {
+        let yeast = match yeast_type.trim().to_uppercase().as_str() {
             "F" => (0.001, "Fresh Yeast"),
             "D" => (0.0003, "Dry Yeast"),
             "L" => (0.15, "Lievito Madre"),
             _ => (0.001, "Fresh Yeast"),
         };
         PizzaDough {
-            portions: p,
-            size: s.to_uppercase(),
-            flour: Some(base * p * size_factor),
-            water: Some((base * 0.6) * p * size_factor),
-            salt: Some((base * 0.03) * p * size_factor),
-            yeast: Some((base * yeast.0) * p * size_factor),
+            portions,
+            size: size.to_uppercase(),
+            flour: Some(base * portions * size_factor),
+            water: Some((base * 0.6) * portions * size_factor),
+            salt: Some((base * 0.03) * portions * size_factor),
+            yeast: Some((base * yeast.0) * portions * size_factor),
             yeast_type: yeast.1.to_string(),
         }
     }
