@@ -1,7 +1,11 @@
 use crate::pizza_dough::PizzaDough;
 use actix_web::{web, Responder, Result};
 
-pub async fn serve_dough() -> Result<impl Responder> {
-    let dough = PizzaDough::new(2.0, "L".to_string(), "y".to_string());
+pub async fn serve_dough(dough_dto: web::Json<PizzaDough>) -> Result<impl Responder> {
+    let dough = PizzaDough::new(
+        dough_dto.portions,
+        dough_dto.size.clone(),
+        dough_dto.yeast_type.clone(),
+    );
     Ok(web::Json(dough))
 }

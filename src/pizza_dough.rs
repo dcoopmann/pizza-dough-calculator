@@ -14,13 +14,13 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
 pub struct PizzaDough {
-    portions: f32,
-    size: String,
-    flour: f32,
-    water: f32,
-    salt: f32,
-    yeast: f32,
-    yeast_type: String,
+    pub portions: f32,
+    pub size: String,
+    flour: Option<f32>,
+    water: Option<f32>,
+    salt: Option<f32>,
+    yeast: Option<f32>,
+    pub yeast_type: String,
 }
 
 impl PizzaDough {
@@ -42,10 +42,10 @@ impl PizzaDough {
         PizzaDough {
             portions: p,
             size: s.to_uppercase(),
-            flour: base * p * size_factor,
-            water: (base * 0.6) * p * size_factor,
-            salt: (base * 0.03) * p * size_factor,
-            yeast: (base * yeast.0) * p * size_factor,
+            flour: Some(base * p * size_factor),
+            water: Some((base * 0.6) * p * size_factor),
+            salt: Some((base * 0.03) * p * size_factor),
+            yeast: Some((base * yeast.0) * p * size_factor),
             yeast_type: yeast.1.to_string(),
         }
     }
@@ -56,12 +56,13 @@ impl PizzaDough {
         } else {
             println!("For {} pizza size {} you knead:", self.portions, self.size);
         }
-        println!("Flour:   {}g", self.flour);
-        println!("Water: {}g", self.water);
-        println!("Salt:   {}g", self.salt);
-        println!("{}:   {}g", self.yeast_type, self.yeast);
+        println!("Flour:   {}g", self.flour.unwrap());
+        println!("Water: {}g", self.water.unwrap());
+        println!("Salt:   {}g", self.salt.unwrap());
+        println!("{}:   {}g", self.yeast_type, self.yeast.unwrap());
 
-        let ta = self.flour + self.water + self.salt + self.yeast;
+        let ta =
+            self.flour.unwrap() + self.water.unwrap() + self.salt.unwrap() + self.yeast.unwrap();
 
         println!("Doug weight total: {}g", ta);
         println!("Doug weight portion: {}g", ta / self.portions);
@@ -75,9 +76,9 @@ mod tests {
     #[test]
     fn test_one_medium() {
         let dough = PizzaDough::new(1.0, String::from("m"), String::from("f"));
-        assert_eq!(dough.flour, 125.0);
-        assert_eq!(dough.water, 75.0);
-        assert_eq!(dough.salt, 3.75);
-        assert_eq!(dough.yeast, 0.125);
+        assert_eq!(dough.flour, Some(125.0));
+        assert_eq!(dough.water, Some(75.0));
+        assert_eq!(dough.salt, Some(3.75));
+        assert_eq!(dough.yeast, Some(0.125));
     }
 }
