@@ -42,24 +42,26 @@ impl PizzaDough {
             _ => (0.001, "Fresh Yeast"),
         };
 
+        let size = size.to_uppercase();
         let flour = Some(base * portions * size_factor);
         let water = Some((base * 0.6) * portions * size_factor);
         let salt = Some((base * 0.03) * portions * size_factor);
         let yeast_weight = Some((base * yeast.0) * portions * size_factor);
+        let yeast_type = yeast.1.to_string();
         let total_weight =
             Some(flour.unwrap() + water.unwrap() + salt.unwrap() + yeast_weight.unwrap());
         let portion_weight = Some(total_weight.unwrap() / portions);
 
         PizzaDough {
             portions,
-            size: size.to_uppercase(),
-            flour: flour,
-            water: water,
-            salt: salt,
+            size,
+            flour,
+            water,
+            salt,
             yeast: yeast_weight,
-            yeast_type: yeast.1.to_string(),
-            total_weight: total_weight,
-            portion_weight: portion_weight,
+            yeast_type,
+            total_weight,
+            portion_weight,
         }
     }
 
@@ -73,12 +75,8 @@ impl PizzaDough {
         println!("Water: {}g", self.water.unwrap());
         println!("Salt:   {}g", self.salt.unwrap());
         println!("{}:   {}g", self.yeast_type, self.yeast.unwrap());
-
-        let ta =
-            self.flour.unwrap() + self.water.unwrap() + self.salt.unwrap() + self.yeast.unwrap();
-
-        println!("Doug weight total: {}g", ta);
-        println!("Doug weight portion: {}g", ta / self.portions);
+        println!("Doug weight total: {}g", self.total_weight.unwrap());
+        println!("Doug weight portion: {}g", self.portion_weight.unwrap());
     }
 }
 
