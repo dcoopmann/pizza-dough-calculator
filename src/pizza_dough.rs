@@ -23,6 +23,7 @@ pub struct PizzaDough {
     yeast: Option<f32>,
     total_weight: Option<f32>,
     portion_weight: Option<f32>,
+    measurement_unit: String,
 }
 
 impl PizzaDough {
@@ -62,6 +63,7 @@ impl PizzaDough {
             yeast_type,
             total_weight,
             portion_weight,
+            measurement_unit: "g".to_string(),
         }
     }
 
