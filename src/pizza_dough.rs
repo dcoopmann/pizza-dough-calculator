@@ -16,11 +16,13 @@ use serde::{Deserialize, Serialize};
 pub struct PizzaDough {
     pub portions: f32,
     pub size: String,
+    pub yeast_type: String,
     flour: Option<f32>,
     water: Option<f32>,
     salt: Option<f32>,
     yeast: Option<f32>,
-    pub yeast_type: String,
+    total_weight: Option<f32>,
+    portion_weight: Option<f32>,
 }
 
 impl PizzaDough {
@@ -39,14 +41,25 @@ impl PizzaDough {
             "L" => (0.15, "Lievito Madre"),
             _ => (0.001, "Fresh Yeast"),
         };
+
+        let flour = Some(base * portions * size_factor);
+        let water = Some((base * 0.6) * portions * size_factor);
+        let salt = Some((base * 0.03) * portions * size_factor);
+        let yeast_weight = Some((base * yeast.0) * portions * size_factor);
+        let total_weight =
+            Some(flour.unwrap() + water.unwrap() + salt.unwrap() + yeast_weight.unwrap());
+        let portion_weight = Some(total_weight.unwrap() / portions);
+
         PizzaDough {
             portions,
             size: size.to_uppercase(),
-            flour: Some(base * portions * size_factor),
-            water: Some((base * 0.6) * portions * size_factor),
-            salt: Some((base * 0.03) * portions * size_factor),
-            yeast: Some((base * yeast.0) * portions * size_factor),
+            flour: flour,
+            water: water,
+            salt: salt,
+            yeast: yeast_weight,
             yeast_type: yeast.1.to_string(),
+            total_weight: total_weight,
+            portion_weight: portion_weight,
         }
     }
 
