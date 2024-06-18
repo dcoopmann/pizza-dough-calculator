@@ -6,7 +6,7 @@ use pizza_dough_calculator::pizza_dough::PizzaDough;
 async fn pizza_dough_is_served() {
     let address = common::spawn_app().await;
     let client = reqwest::Client::new();
-    let body = PizzaDough::new(2.0, "L".to_string(), "Y".to_string());
+    let body = PizzaDough::new(2.0, "L".to_string(), "F".to_string());
 
     let response = client
         .post(&format!("{}/serve-dough", address))
