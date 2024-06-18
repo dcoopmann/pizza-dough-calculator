@@ -12,7 +12,7 @@ Dry yeast 1/3 of fresh yeast used (1 gram of dry for 3 grams of fresh)
 */
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, PartialOrd)]
 pub struct PizzaDough {
     pub portions: f32,
     pub size: String,
