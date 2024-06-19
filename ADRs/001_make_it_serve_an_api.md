@@ -27,22 +27,25 @@ pub struct PizzaDough {
 #### Request body
 
 ```json
+{
     "portions": 2.0,
     "size": "L",
     "yeast_type": "F"
+}
 ```
 
 #### Response
 ```json
+{
     "portions": 2.0,   
     "size": "L",
     "yeast_type": "Fresh Yeast",
     "flour": 312.5,      
     "water": 187.5,      
-    "salt": 9,375,       
+    "salt": 9.375,       
     "yeast": 0.3125,
-    "total_weight": 509,6875,
+    "total_weight": 509.6875,
     "portion_weight": 254.84375,      
     "measurement_unit": "g",
-
+}
 ```
