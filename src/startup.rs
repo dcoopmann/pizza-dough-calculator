@@ -3,9 +3,10 @@ use crate::routes::serve_dough;
 use actix_web::dev::Server;
 use actix_web::{web, App, HttpServer};
 use std::net::TcpListener;
+use tracing::info;
 
 pub fn configure_server(listener: TcpListener) -> Result<Server, std::io::Error> {
-    println!(
+    info!(
         "Starting to serve Pizza via Http on: {}",
         listener.local_addr().unwrap()
     );
