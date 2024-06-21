@@ -3,6 +3,7 @@ use std::net::TcpListener;
 use clap::Parser;
 use pizza_dough_calculator::pizza_dough::PizzaDough;
 use pizza_dough_calculator::startup::configure_server;
+use tracing_subscriber;
 
 #[derive(Parser, Debug)]
 #[command(author, version,  about, long_about=None)]
@@ -31,6 +32,8 @@ struct Args {
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     let args = Args::parse();
+
+    tracing_subscriber::fmt::init();
 
     if args.serve {
         let address = format!("127.0.0.1:{}", args.port);
