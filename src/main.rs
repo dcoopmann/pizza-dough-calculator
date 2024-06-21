@@ -32,6 +32,8 @@ struct Args {
 async fn main() -> std::io::Result<()> {
     let args = Args::parse();
 
+    tracing_subscriber::fmt::init();
+
     if args.serve {
         let address = format!("127.0.0.1:{}", args.port);
         let listener = TcpListener::bind(address.clone())
