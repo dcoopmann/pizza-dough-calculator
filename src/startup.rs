@@ -3,7 +3,6 @@ use crate::routes::serve_dough;
 use actix_web::dev::Server;
 use actix_web::{web, App, HttpServer};
 use std::net::TcpListener;
-use tracing_actix_web::TracingLogger;
 
 pub fn configure_server(listener: TcpListener) -> Result<Server, std::io::Error> {
     println!(
@@ -13,7 +12,6 @@ pub fn configure_server(listener: TcpListener) -> Result<Server, std::io::Error>
 
     let server = HttpServer::new(move || {
         App::new()
-            .wrap(TracingLogger::default())
             .route("/health-check", web::get().to(health_check))
             .route("/serve-dough", web::post().to(serve_dough))
     })
