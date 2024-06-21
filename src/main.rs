@@ -3,7 +3,6 @@ use std::net::TcpListener;
 use clap::Parser;
 use pizza_dough_calculator::pizza_dough::PizzaDough;
 use pizza_dough_calculator::startup::configure_server;
-use tracing_subscriber;
 
 #[derive(Parser, Debug)]
 #[command(author, version,  about, long_about=None)]
