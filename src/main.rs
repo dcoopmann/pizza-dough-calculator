@@ -26,6 +26,10 @@ struct Args {
     ///Port to bind to
     #[arg(long, default_value_t = 8080)]
     port: u16,
+
+    ///Host IP Address
+    #[arg(long, default_value_t = String::from("127.0.0.1"))]
+    host: String,
 }
 
 #[actix_web::main]
@@ -35,7 +39,7 @@ async fn main() -> std::io::Result<()> {
     tracing_subscriber::fmt::init();
 
     if args.serve {
-        let address = format!("127.0.0.1:{}", args.port);
+        let address = format!("{}:{}", args.host, args.port);
         let listener = TcpListener::bind(address.clone())
             .unwrap_or_else(|_| panic!("Failed to bind on {}", &address));
         configure_server(listener)?.await
