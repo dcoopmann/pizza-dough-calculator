@@ -1,5 +1,6 @@
 FROM rust:1.79 AS builder
 WORKDIR /app
+RUN apt update && apt install mold clang -y
 COPY . .
 RUN cargo build --release
 
