@@ -6,3 +6,6 @@ Just running it will give you the default recipe for two medium servings using f
 
 ## Web Server
 To start the serve use the `--serve` flag. Use `--port <PORT>` to bind to a different port than 8080. Pizza dough is served under `localhost:8080/serve-dough`, if not bound to another port. For API details see [ADR 001](ADRs/001_make_it_serve_an_api.md)
+
+# Building
+For faster build times this Project is configured to use the [mold linker](https://github.com/rui314/mold), which needs to be installed separately.
